@@ -8,7 +8,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Scaffold
 import androidx.compose.ui.Modifier
-import com.example.helloandroidstudio.presentation.GithubScreen
+import com.example.helloandroidstudio.presentation.DollarRateScreen
 import com.example.helloandroidstudio.ui.theme.HelloAndroidStudioTheme
 
 class MainActivity : ComponentActivity() {
@@ -17,8 +17,10 @@ class MainActivity : ComponentActivity() {
         enableEdgeToEdge()
         setContent {
             HelloAndroidStudioTheme {
-                Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
-                    GithubScreen(
+                Scaffold(
+                    modifier = Modifier.fillMaxSize()
+                ) { innerPadding ->
+                    DollarRateScreen(
                         modifier = Modifier.padding(innerPadding)
                     )
                 }

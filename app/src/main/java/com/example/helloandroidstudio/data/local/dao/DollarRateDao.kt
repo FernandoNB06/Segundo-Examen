@@ -4,6 +4,7 @@ import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.Query
 import com.example.helloandroidstudio.data.local.entity.DollarRateEntity
+import kotlinx.coroutines.flow.Flow
 
 @Dao
 interface DollarRateDao {
@@ -11,8 +12,8 @@ interface DollarRateDao {
     @Insert
     suspend fun insertRate(rate: DollarRateEntity)
 
-    @Query("SELECT * FROM dollar_rates")
-    suspend fun getAllRates(): List<DollarRateEntity>
+    @Query("SELECT * FROM dollar_rates ORDER BY id DESC")
+    fun getAllRates(): Flow<List<DollarRateEntity>>
 
     @Query("DELETE FROM dollar_rates")
     suspend fun deleteAll()

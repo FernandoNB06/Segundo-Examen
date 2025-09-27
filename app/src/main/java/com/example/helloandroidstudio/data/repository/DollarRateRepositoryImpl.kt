@@ -1,20 +1,21 @@
-package com.example.helloandroidstudio.data.repository
+package com.example.helloandroidstudio.data.local.dao
 
-import com.example.helloandroidstudio.data.local.dao.DollarRateDao
+import androidx.room.Dao
+import androidx.room.Insert
+import androidx.room.OnConflictStrategy
+import androidx.room.Query
 import com.example.helloandroidstudio.data.local.entity.DollarRateEntity
+import kotlinx.coroutines.flow.Flow
 
-class DollarRateRepositoryImpl(
-    private val dao: DollarRateDao
-) {
-    suspend fun insertRate(rate: DollarRateEntity) {
-        dao.insertRate(rate)
-    }
+@Dao
+interface DollarRateDao {
 
-    suspend fun getAllRates(): List<DollarRateEntity> {
-        return dao.getAllRates()
-    }
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    suspend fun insertRate(rate: DollarRateEntity)
 
-    suspend fun deleteAll() {
-        dao.deleteAll()
-    }
+    @Query("SELECT * FROM dollar_rates ORDER BY id DESC")
+    fun getAllRates(): Flow<List<DollarRateEntity>>   // 👈 Flow en vez de List
+
+    @Query("DELETE FROM dollar_rates")
+    suspend fun deleteAll()
 }

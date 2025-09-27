@@ -6,9 +6,10 @@ import com.example.helloandroidstudio.domain.repository.DollarRateRepository
 import com.example.helloandroidstudio.data.local.entity.DollarRateEntity
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 
-class   DollarRateViewModel(
+class DollarRateViewModel(
     private val repository: DollarRateRepository
 ) : ViewModel() {
 
@@ -16,26 +17,28 @@ class   DollarRateViewModel(
     private val _rates = MutableStateFlow<List<DollarRateEntity>>(emptyList())
     val rates: StateFlow<List<DollarRateEntity>> = _rates
 
-    // Insertar nueva tasa
-    fun insertRate(rate: DollarRateEntity) {
+    init {
+        // cargar automáticamente al iniciar
+        observeRates()
+    }
+
+    fun addRate(rate: DollarRateEntity) {
         viewModelScope.launch {
             repository.insertRate(rate)
-            loadRates() // refrescar
         }
     }
 
-    // Obtener todas las tasas
-    fun loadRates() {
+    private fun observeRates() {
         viewModelScope.launch {
-            _rates.value = repository.getAllRates()
+            repository.getAllRates().collectLatest { ratesList ->
+                _rates.value = ratesList
+            }
         }
     }
 
-    // Borrar todas las tasas
     fun deleteAll() {
         viewModelScope.launch {
             repository.deleteAll()
-            _rates.value = emptyList()
         }
     }
 }
