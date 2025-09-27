@@ -11,4 +11,5 @@ import com.example.helloandroidstudio.data.local.entity.DollarRateEntity
 )
 abstract class AppDatabase : RoomDatabase() {
     abstract fun dollarRateDao(): DollarRateDao
+    abstract fun movieDao(): MovieDao
 }

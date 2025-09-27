@@ -43,5 +43,5 @@ val appModule = module {
 
     // ---------- Movie ----------
     single<MovieRepository> { MovieRepositoryImpl(get()) }
-    viewModel { MovieViewModel(get()) } // lo crearemos en el siguiente paso
+    viewModel { MovieViewModel(get()) }
 }
