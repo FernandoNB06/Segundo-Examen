@@ -1,18 +1,10 @@
 package com.example.helloandroidstudio.domain.model
 
-import org.junit.Assert.*
-import org.junit.Test
-
-class EmailTest {
-
-    @Test
-    fun `crear Email valido`() {
-        val email = Email("test@example.com")
-        assertEquals("test@example.com", email.value)
+@JvmInline
+value class Email(private val value: String) {
+    init {
+        require(value.contains("@")) { "Email must contain @" }
     }
 
-    @Test(expected = IllegalArgumentException::class)
-    fun `crear Email sin arroba lanza excepcion`() {
-        Email("correo_invalido.com")
-    }
+    override fun toString(): String = value
 }

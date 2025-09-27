@@ -9,10 +9,16 @@ class NameTest {
     fun `valid name should be created`() {
         val name = Name("Fernando")
         assertEquals("Fernando", name.toString())
+        assertEquals("Fernando", name.value)
     }
 
     @Test(expected = IllegalArgumentException::class)
     fun `empty name should throw exception`() {
         Name("")
+    }
+
+    @Test(expected = IllegalArgumentException::class)
+    fun `blank name should throw exception`() {
+        Name("   ") // solo espacios
     }
 }

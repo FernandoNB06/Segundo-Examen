@@ -17,5 +17,9 @@ interface MovieDao {
 
     @Query("UPDATE movies SET is_liked = :isLiked WHERE id = :movieId")
     suspend fun updateLike(movieId: Int, isLiked: Boolean)
+
+    @Query("DELETE FROM movies")
+    suspend fun deleteAll()
+
 }
 

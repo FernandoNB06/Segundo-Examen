@@ -36,7 +36,8 @@ fun MovieScreen(
                         onClick = { vm.toggleLike(movie) },
                         modifier = Modifier.padding(top = 4.dp)
                     ) {
-                        Text(if (movie.like) "Quitar Like" else "Like")
+                        Text(if (movie.isLiked) "Quitar Like" else "Like")
+
                     }
                 }
             }

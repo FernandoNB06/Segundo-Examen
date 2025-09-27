@@ -14,10 +14,16 @@ class MovieRepositoryImpl(
     }
 
     override suspend fun insertMovies(movies: List<MovieEntity>) {
-        dao.insertMovies(movies)
+        movies.forEach { movie ->
+            dao.insertMovie(movie)
+        }
     }
 
     override suspend fun updateLike(movieId: Int, isLiked: Boolean) {
         dao.updateLike(movieId, isLiked)
     }
+    override suspend fun deleteAll() {
+        dao.deleteAll()
+    }
+
 }

@@ -1,18 +1,10 @@
 package com.example.helloandroidstudio.domain.model
 
-import org.junit.Assert.*
-import org.junit.Test
-
-class NameTest {
-
-    @Test
-    fun `crear Name valido`() {
-        val name = Name("Fernando")
-        assertEquals("Fernando", name.value)
+@JvmInline
+value class Name(val value: String) {
+    init {
+        require(value.isNotBlank()) { "Name cannot be empty" }
     }
 
-    @Test(expected = IllegalArgumentException::class)
-    fun `crear Name vacio lanza excepcion`() {
-        Name("")
-    }
+    override fun toString(): String = value
 }

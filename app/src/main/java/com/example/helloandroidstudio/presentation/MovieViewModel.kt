@@ -11,7 +11,6 @@ class MovieViewModel(
     private val repository: MovieRepository
 ) : ViewModel() {
 
-    // Estado de las películas (Flow)
     private val _movies = MutableStateFlow<List<MovieEntity>>(emptyList())
     val movies: StateFlow<List<MovieEntity>> = _movies.asStateFlow()
 
@@ -19,36 +18,31 @@ class MovieViewModel(
         loadMovies()
     }
 
-    // Cargar películas desde Room
     private fun loadMovies() {
         viewModelScope.launch {
             repository.getAllMovies()
                 .collect { movieList ->
-                    // Ordenamos: primero las con like
-                    _movies.value = movieList.sortedByDescending { it.like }
+                    _movies.value = movieList.sortedByDescending { it.isLiked }
                 }
         }
     }
 
-    // Insertar o actualizar película
     fun insertMovie(movie: MovieEntity) {
         viewModelScope.launch {
-            repository.insertMovie(movie)
+            repository.insertMovies(listOf(movie)) // ajustado
         }
     }
 
-    // Cambiar el estado de like
     fun toggleLike(movie: MovieEntity) {
         viewModelScope.launch {
-            val updated = movie.copy(like = !movie.like)
-            repository.insertMovie(updated) // REPLACE sobrescribe
+            val updated = movie.copy(isLiked = !movie.isLiked)
+            repository.insertMovies(listOf(updated)) // REPLACE sobrescribe
         }
     }
 
-    // Borrar todas las películas
     fun deleteAll() {
         viewModelScope.launch {
-            repository.deleteAll()
+            repository.deleteAll() // ⚠️ este método hay que añadirlo en MovieRepository e Impl
         }
     }
 }

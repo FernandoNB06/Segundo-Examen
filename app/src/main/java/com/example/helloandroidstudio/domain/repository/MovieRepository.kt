@@ -7,4 +7,5 @@ interface MovieRepository {
     fun getAllMovies(): Flow<List<MovieEntity>>
     suspend fun insertMovies(movies: List<MovieEntity>)
     suspend fun updateLike(movieId: Int, isLiked: Boolean)
+    suspend fun deleteAll() // 👈 añadir porque tu ViewModel lo usa
 }
