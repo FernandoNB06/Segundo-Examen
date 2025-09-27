@@ -10,7 +10,7 @@ import kotlinx.coroutines.flow.Flow
 @Dao
 interface MovieDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun insertMovies(movies: List<MovieEntity>)
+    suspend fun insertMovie(movie: MovieEntity)
 
     @Query("SELECT * FROM movies ORDER BY is_liked DESC")
     fun getAllMovies(): Flow<List<MovieEntity>>
